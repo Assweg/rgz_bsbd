@@ -1,0 +1,31 @@
+# .dockerignore
+# Исключаем ненужные файлы из Docker контекста
+
+# Документы
+*.docx
+~$*
+
+# Временные файлы
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Логи
+*.log
+
+# README (не нужен в контейнере)
+README.md
+
+# Скрипт управления (не нужен в контейнере)
+run_docker.sh

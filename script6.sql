@@ -1,0 +1,47 @@
+-- 06_default_privs.sql
+-- Настройка привилегий по умолчанию для новых объектов
+
+-- Привилегии для app_owner
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA app
+GRANT SELECT ON TABLES TO app_reader;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA app
+GRANT SELECT, INSERT, UPDATE ON TABLES TO app_writer;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA app
+GRANT ALL ON TABLES TO app_owner;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA ref
+GRANT SELECT ON TABLES TO app_reader;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA ref
+GRANT SELECT, INSERT, UPDATE ON TABLES TO app_writer;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA audit
+GRANT SELECT ON TABLES TO auditor;
+
+-- Привилегии для последовательностей
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA app
+GRANT USAGE ON SEQUENCES TO app_writer;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA ref
+GRANT USAGE ON SEQUENCES TO app_writer;
+
+-- Запрещаем PUBLIC доступ к новым объектам
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA app
+REVOKE ALL ON TABLES FROM PUBLIC;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA ref
+REVOKE ALL ON TABLES FROM PUBLIC;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA audit
+REVOKE ALL ON TABLES FROM PUBLIC;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA stg
+REVOKE ALL ON TABLES FROM PUBLIC;
+
+-- Уведомление о настройке default privileges
+DO $$ 
+BEGIN
+    RAISE NOTICE 'Привилегии по умолчанию успешно настроены';
+END $$;
