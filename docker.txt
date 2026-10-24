@@ -1,0 +1,34 @@
+Вот набор самых полезных команд, которые помогут проверить работу Docker и управлять контейнерами:
+
+## Проверка работы Docker
+- `systemctl status docker` — статус сервиса Docker (ищем `active (running)`).
+- `sudo systemctl start docker` / `sudo systemctl stop docker` — запуск и остановка сервиса.
+- `docker info` — общая информация о демоне (версии, драйверы, состояние).
+- `docker version` — версии клиента/сервера.
+
+## Контейнеры и образы
+- `docker ps` — список работающих контейнеров.
+- `docker ps -a` — все контейнеры (включая остановленные).
+- `docker logs <container>` — логи контейнера.
+- `docker stop <container>` / `docker start <container>` / `docker restart <container>` — управление контейнерами.
+- `docker rm <container>` — удалить остановленный контейнер.
+- `docker images` — список локальных образов.
+- `docker rmi <image>` — удалить образ.
+
+## Docker Compose (v2 — то, что использует твой `run_docker.sh`)
+- `docker compose ps` — состояние compose-сервиса в текущей папке.
+- `docker compose logs -f` — потоки логов всех сервисов.
+- `docker compose up -d` — поднять сервисы в фоне.
+- `docker compose down` — остановить и удалить контейнеры/сеть/тома (по конфигу в `docker-compose.yml`).
+- `docker compose build` — пересобрать образы.
+
+## Управление правами
+- `sudo usermod -aG docker <user>` — добавить пользователя в группу `docker` (уже сделали).
+- После добавления: перелогиниться или выполнить `newgrp docker`, чтобы команды работали без `sudo`.
+
+Если хочешь быстро удостовериться, что всё живо:
+1. `docker ps` — должен показать `dubbing_studio_postgres` и `dubbing_studio_pgadmin`.
+2. `docker compose ps` (из каталога `Laba3`) — аналогично подтвердит статус.
+3. `docker logs dubbing_studio_postgres | tail` — последние строки логов PostgreSQL.
+
+Скажи, если нужно пояснить конкретную команду или автоматизировать проверки.
